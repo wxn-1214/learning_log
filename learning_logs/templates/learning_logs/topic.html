@@ -1,0 +1,40 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block header %}
+    <h2>{{ topic }}<!--被替换为context中的topic的当前值-->
+        <small>
+            <a href={% url 'learning_logs:delete_topic' topic.id %}>
+                <span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span></a>
+        </small>
+    </h2>
+
+{% endblock header %}
+
+{% block content %}
+
+    <p>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">添加新条目</a>
+    </p>
+    <ul>
+    {% for entry in entries %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>
+                    <!--|为过滤器，date:'M d, Y H:i'指定了时间格式-->
+                    {{ entry.date_added|date:'M d, Y H:i' }}
+                    <small>
+                        <a href="{% url 'learning_logs:edit_entry' entry.id %}">【编辑】</a>
+                        <a href={% url 'learning_logs:delete_entry' entry.id %}>【删除】</a>
+                    </small>
+                </h3>
+            </div>
+            <div class="panel-body">
+                {{ entry.text|linebreaks }}
+            </div>
+        </div><!-- panel -->
+    {% empty %}
+        <li>尚无该主题的条目。</li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}

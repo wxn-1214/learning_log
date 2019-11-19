@@ -1,0 +1,26 @@
+{% extends "learning_logs/base.html" %}
+
+{% block header %}
+    <h2>主题</h2>
+{% endblock header %}
+
+{% block content %}
+
+    <p><a href="{% url 'learning_logs:new_topic' %}">添加新主题</a></p>
+    <!--一个项目列表，又被称为无序列表，用<ul></ul>表示-->
+    <ul>
+        <!--一个for循环的模板标签，遍历字典context中的列表topics-->
+        {% for topic in topics %}
+            <!--被替换为topic的当前值-->
+            <li>
+                <h3>
+                    <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+                </h3>
+            </li>
+        <!--模板标签，告诉Django在列表topics为空时怎么办-->
+        {% empty %}
+            <li>尚未添加主题。</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}

@@ -1,0 +1,72 @@
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+<!--设置语言为中文-->
+<html lang="ch">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>学习笔记</title>
+
+        <!--让Django包含所有的Bootstrap样式文件-->
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+
+    </head>
+
+    <body>
+
+    <!--静态导航栏-->
+    <nav class="navbar navbar-default navbar-static-top"><!--<nav>元素表示导航链接部分-->
+        <div class="container">
+
+            <div class="navbar-header">
+                <!--一个按钮，当浏览器窗口太窄，无法水平显示整个导航栏时显示出来
+                    单击这个按钮，将出现一个下拉框，其中包含所有的导航元素
+                    用户缩小浏览器窗口或在屏幕较小的移动设备显示网站时，collapse会折叠导航栏-->
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                </button>
+                <!--在导航栏的最左边显示项目名，并将其设置为到主页的链接-->
+                <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+                    学习笔记</a>
+            </div>
+
+            <!--一组让用户能够在网站中导航的链接
+                导航栏就算一个以<ul>打头的列表，其中每一个链接都是一个列表项<li>-->
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'learning_logs:topics' %}">主题</a></li>
+                </ul>
+
+                <!--第二个导航栏链接，navbar-right使其出现在导航栏的右边-->
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a>你好,{{ user.username }}!</a></li>
+                    <li><a href="{% url 'users:logout' %}">【注销】</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:register' %}">【注册】</a></li>
+                        <li><a href="{% url 'users:login' %}">【登录】</a></li>
+                    {% endif %}
+                </ul>
+            </div><!--/.nav-collapse -->
+
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <div class="page-header">
+            {% block header %}{% endblock header %}
+        </div>
+        <div>
+            {% block content  %}{% endblock content %}
+        </div>
+
+    </div><!--/container-->
+
+    </body>
+</html>

@@ -1,0 +1,17 @@
+<!--子模块的第一行必须包含标签下列标签让Django知道它继承的哪个父模块-->
+{% extends "learning_logs/base.html" %}
+
+{% block header %}
+    <div class="jumbotron"><!--jumbotron是一个大框-->
+        <h1>记录你的学习</h1>
+    </div>
+{% endblock header %}
+
+{% block content %}
+    <h2>
+    <a href="{% url 'users:register' %}">注册一个账号</a>来记录你的学习笔记，并列出你正在学习的主题。
+    </h2>
+    <h2>
+        每当您学习有关某个主题的新知识时，就输入一个总结您所学内容的条目。
+    </h2>
+{% endblock content %}
